@@ -11,7 +11,10 @@ import {
 	faListAlt
 } from "@fortawesome/free-solid-svg-icons";
 
-//change the state to contain list objects instead of list components
+//displaying total numbers of unfinished tasks on todolist left
+//next will be working on marking task as important (star icon)
+//task objects with more data (add to my day, add due date, and note)
+//the above will be displayed in a new component called FocusedTask
 
 class ToDo extends Component {
 	state = {

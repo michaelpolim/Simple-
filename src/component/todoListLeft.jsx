@@ -23,6 +23,9 @@ class ToDolistLeft extends Component {
 							>
 								<FontAwesomeIcon icon={list.icon} className="icons" />{" "}
 								<span className="icon-name">{list.name}</span>
+								<span className="total-tasks">
+									{list.tasks.filter(task => task.status !== "completed").length}
+								</span>
 							</div>
 						);
 					})}
