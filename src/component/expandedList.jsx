@@ -103,7 +103,8 @@ class ExpandedList extends Component {
 	newTask = () => {
 		if (this.state.taskName) {
 			let newTasks = [].concat(this.props.currentlySelected.tasks, {
-				name: this.state.taskName
+				name: this.state.taskName,
+				status: ""
 			});
 
 			let newSelected = {
