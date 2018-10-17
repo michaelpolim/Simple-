@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css?family=Barlow");
+
+#main-todo {
+	font-family: Barlow;
+	font-size: 0.95em;
+	font-weight: lighter;
+	margin-top: -15px;
+}
+
+#todo-list-left {
+	height: 100%;
+	position: fixed;
+	left: 0;
+	width: 250px;
+	background-color: #fafafa;
+	padding: 5px;
+}
+
+#todo-list-left .left-list-name {
+	margin: 20px 10px;
+	cursor: pointer;
+}
+
+#todo-list-left .icons {
+	font-size: 0.8em;
+}
+
+#todo-list-left .icon-name {
+	position: absolute;
+	left: 45px;
+	margin-left: 10px;
+}
+
+#expand-left-button {
+	margin: 20px 10px;
+	cursor: pointer;
+}
+
+#expanded-list {
+	position: fixed;
+	left: 250px;
+	right: 0;
+	background-color: #eeeeee;
+	height: 100%;
+	padding: 20px 10px 10px 20px;
+	border-left: solid 2px dimgrey;
+}
+
+.list .task-list .task-checkbox {
+	display: inline-block;
+}
+
+#expanded-list .list {
+	margin-bottom: 15px;
+}
+
+#expanded-list .list .task {
+	padding: 10px 0 3px 0;
+	border-bottom: dotted 1px grey;
+}
+
+#add-task-button {
+	border: none;
+	cursor: pointer;
+	height: 100%;
+}
+
+.list input {
+	padding: 5px 10px;
+}
+
+.list .name {
+	background-color: inherit;
+	font-size: 1.3em;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	margin-bottom: 15px;
+	transition: all 0.25s;
+}
+
+.list .name:focus {
+	background-color: white;
+	cursor: text;
+	border-radius: 5px;
+}
+
+#expanded-list .add-task input {
+	padding: 7.5px;
+	outline: none;
+	border: none;
+	margin-right: 10px;
+	border-radius: 5px;
+	font-size: 1em;
+}
