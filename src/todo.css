@@ -55,14 +55,55 @@
 }
 
 #expanded-list .list .task {
-	padding: 10px 0 3px 0;
+	display: block;
+	position: relative;
+	padding: 10px 0 7px 0;
 	border-bottom: dotted 1px grey;
 }
 
+#expanded-list .list .task .task-name {
+	line-height: 10px;
+}
+
+#expanded-list .list .task input {
+	position: absolute;
+	cursor: pointer;
+	opacity: 0;
+	height: 0;
+	width: 0;
+}
+
+#expanded-list .list .task .checkbox {
+	position: relative;
+	display: inline-block;
+	height: 13px;
+	width: 13px;
+	background-color: white;
+	border: solid 1px lightblue;
+	border-radius: 50%;
+	margin: -2px 5px;
+	cursor: pointer;
+}
+
+#expanded-list .list .task .checkbox:hover {
+	border: solid 1px #4ea0bb;
+}
+
+#expanded-list .list .task.completed .task-name {
+	text-decoration: line-through;
+}
+
+#expanded-list .list .task.completed .checkbox {
+	background-color: #4ea0bb;
+}
+
 #add-task-button {
-	border: none;
+	border: solid 1px lightblue;
 	cursor: pointer;
 	height: 100%;
+	padding: 5px 6px 4px;
+	background-color: inherit;
+	outline: none;
 }
 
 .list input {

@@ -24,18 +24,21 @@ class ToDo extends Component {
 
 		this.dummyTaskArray = [
 			[
-				{ name: "Do Laundry" },
-				{ name: "Get milk, eggs, and cheese" },
-				{ name: "Visit IKEA" }
+				{ name: "Do Laundry", status: "" },
+				{ name: "Get milk, eggs, and cheese", status: "" },
+				{ name: "Visit IKEA", status: "" }
 			],
 			[
-				{ name: "Clean mattress" },
-				{ name: "Buy screen protector" },
-				{ name: "Buy goldfish" },
-				{ name: "Buy mom's birthday present" },
-				{ name: "Get cheap wine" }
+				{ name: "Clean mattress", status: "" },
+				{ name: "Buy screen protector", status: "" },
+				{ name: "Buy goldfish", status: "" },
+				{ name: "Buy mom's birthday present", status: "" },
+				{ name: "Get cheap wine", status: "" }
 			],
-			[{ name: "Meetup with Martin" }, { name: "Visit Popular @ Nex" }]
+			[
+				{ name: "Meetup with Martin", status: "" },
+				{ name: "Visit Popular @ Nex", status: "" }
+			]
 		];
 		this.state.toDoList = [
 			{ name: "My Day", tasks: this.dummyTaskArray[0], icon: faSun },
@@ -59,6 +62,7 @@ class ToDo extends Component {
 					currentlySelected={this.state.selected}
 					onAddTask={this.handleAddTask}
 					onListNameChange={this.handleListNameChange}
+					onTaskComplete={this.handleTaskCompletion}
 				/>
 			</div>
 		);
@@ -99,6 +103,18 @@ class ToDo extends Component {
 		} else {
 			alert("Please enter a task");
 		}
+	};
+
+	handleTaskCompletion = updatedTasks => {
+		let newListSelected = this.state.selected;
+		let newTodoList = this.state.toDoList.slice();
+
+		newListSelected.tasks = updatedTasks;
+		newTodoList[
+			this.state.toDoList.indexOf(list => list === this.state.selected)
+		] = this.newListSelected;
+
+		this.setState({ toDoList: newTodoList, selected: newListSelected });
 	};
 }
 

@@ -31,10 +31,15 @@ class ExpandedList extends Component {
 						{this.props.currentlySelected.tasks.map(task => {
 							return (
 								<div
-									className="task"
+									className={task.status === "" ? "task" : "task completed"}
 									key={task.name + this.props.currentlySelected.tasks.indexOf(task)}
+									onClick={this.handleShowTask}
 								>
-									<input type="checkbox" name="completed" className="task-checkbox" />
+									<input type="checkbox" name="completed" />
+									<span
+										className="checkbox"
+										onClick={() => this.props.onTaskComplete(this.completeTask(task))}
+									/>
 									<span className="task-name">{task.name}</span>
 								</div>
 							);
@@ -65,6 +70,34 @@ class ExpandedList extends Component {
 
 	handleInput = e => {
 		this.setState({ taskName: e.target.value });
+	};
+
+	handleShowTask = () => {
+		console.log("task clicked");
+	};
+
+	completeTask = task => {
+		console.log("task completed: ", task);
+		//if current task status is incomplete, make it complete and vice versa
+		//return the tasks array
+		let newTasks = this.props.currentlySelected.tasks.slice();
+
+		switch (task.status) {
+			case "":
+				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+					name: task.name,
+					status: "completed"
+				});
+				return newTasks;
+			case "completed":
+				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+					name: task.name,
+					status: ""
+				});
+				return newTasks;
+			default:
+				break;
+		}
 	};
 
 	newTask = () => {
