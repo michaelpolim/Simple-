@@ -11,7 +11,6 @@ import {
 	faListAlt
 } from "@fortawesome/free-solid-svg-icons";
 
-//displaying total numbers of unfinished tasks on todolist left
 //next will be working on marking task as important (star icon)
 //task objects with more data (add to my day, add due date, and note)
 //the above will be displayed in a new component called FocusedTask
@@ -27,27 +26,82 @@ class ToDo extends Component {
 
 		this.dummyTaskArray = [
 			[
-				{ name: "Do Laundry", status: "" },
-				{ name: "Get milk, eggs, and cheese", status: "" },
-				{ name: "Visit IKEA", status: "" }
+				{ name: "Do Laundry", status: "", dueDate: "", note: "", flag: "" },
+				{
+					name: "Get milk, eggs, and cheese",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: ""
+				},
+				{ name: "Visit IKEA", status: "", dueDate: "", note: "", flag: "" }
 			],
 			[
-				{ name: "Clean mattress", status: "" },
-				{ name: "Buy screen protector", status: "" },
-				{ name: "Buy goldfish", status: "" },
-				{ name: "Buy mom's birthday present", status: "" },
-				{ name: "Get cheap wine", status: "" }
+				{ name: "Clean mattress", status: "", dueDate: "", note: "", flag: "" },
+				{
+					name: "Buy screen protector",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: ""
+				},
+				{ name: "Buy goldfish", status: "", dueDate: "", note: "", flag: "" },
+				{
+					name: "Buy mom's birthday present",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: ""
+				},
+				{ name: "Get cheap wine", status: "", dueDate: "", note: "", flag: "" }
 			],
 			[
-				{ name: "Meetup with Martin", status: "" },
-				{ name: "Visit Popular @ Nex", status: "" }
+				{ name: "Meetup with Martin", status: "", dueDate: "", note: "", flag: "" },
+				{ name: "Visit Popular @ Nex", status: "", dueDate: "", note: "", flag: "" }
+			],
+			[
+				{
+					name: "Clean mattress",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: "important"
+				},
+				{
+					name: "Buy screen protector",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: "important"
+				},
+				{
+					name: "Buy goldfish",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: "important"
+				},
+				{
+					name: "Clean bedroom",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: "important"
+				},
+				{
+					name: "Practice ReactJS",
+					status: "",
+					dueDate: "",
+					note: "",
+					flag: "important"
+				}
 			]
 		];
 		this.state.toDoList = [
 			{ name: "My Day", tasks: this.dummyTaskArray[0], icon: faSun },
-			{ name: "Important", tasks: this.dummyTaskArray[1], icon: faStar },
+			{ name: "Important", tasks: this.dummyTaskArray[3], icon: faStar },
 			{ name: "Planned", tasks: this.dummyTaskArray[2], icon: faCalendar },
-			{ name: "Tasks", tasks: this.dummyTaskArray[0], icon: faHome }
+			{ name: "Tasks", tasks: this.dummyTaskArray[1], icon: faHome }
 		];
 		//initialize the currently selected one to my day
 		this.state.selected = this.state.toDoList[0];
@@ -65,7 +119,7 @@ class ToDo extends Component {
 					currentlySelected={this.state.selected}
 					onAddTask={this.handleAddTask}
 					onListNameChange={this.handleListNameChange}
-					onTaskComplete={this.handleTaskCompletion}
+					onTaskUpdate={this.handleTaskUpdate}
 				/>
 			</div>
 		);
@@ -108,15 +162,38 @@ class ToDo extends Component {
 		}
 	};
 
-	handleTaskCompletion = updatedTasks => {
+	handleTaskUpdate = updatedTasks => {
 		let newListSelected = this.state.selected;
 		let newTodoList = this.state.toDoList.slice();
 
-		newListSelected.tasks = updatedTasks;
+		//update the currently selected list's tasks to the newly updated tasks and pass the updatedList
+		//in the newTodoList
+		newListSelected.tasks = updatedTasks.newTasks;
 		newTodoList[
 			this.state.toDoList.indexOf(list => list === this.state.selected)
-		] = this.newListSelected;
+		] = newListSelected;
 
+		//copy important list to a new variable
+		let importantList =
+			newTodoList[newTodoList.findIndex(list => list.name === "Important")];
+
+		switch (updatedTasks.action) {
+			case "important":
+				//if user flags an item as important, add the task to the important list
+				importantList.tasks = importantList.tasks.concat(updatedTasks.task);
+				newTodoList[
+					newTodoList.indexOf(list => list.name === "Important")
+				] = importantList;
+				console.log("new Todo after flag: ", newTodoList);
+				break;
+			case "remove-important":
+				//if user unflags an item, check if items exist on
+				break;
+			default:
+				break;
+		}
+
+		//finally update the state with the updated lists
 		this.setState({ toDoList: newTodoList, selected: newListSelected });
 	};
 }

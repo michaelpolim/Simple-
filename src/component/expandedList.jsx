@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faStar, faThList } from "@fortawesome/free-solid-svg-icons";
+import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
 import FocusedTask from "./focusedTask";
 import "../todo.css";
+import Task from "./task";
 
 class ExpandedList extends Component {
 	state = {
@@ -38,16 +40,21 @@ class ExpandedList extends Component {
 										className={task.status === "" ? "task" : "task completed"}
 										key={task.name + this.props.currentlySelected.tasks.indexOf(task)}
 									>
-										<input type="checkbox" name="completed" />
 										<span
 											className="checkbox"
-											onClick={() => this.props.onTaskComplete(this.completeTask(task))}
+											onClick={() => this.props.onTaskUpdate(this.completeTask(task))}
 										/>
 										<span
 											className="task-name"
 											onClick={() => this.handleTaskFocus(task)}
 										>
 											{task.name}
+										</span>
+										<span
+											className="flag-important"
+											onClick={() => this.props.onTaskUpdate(this.flagAsImpt(task))}
+										>
+											<FontAwesomeIcon icon={task.flag === "" ? farStar : faStar} />
 										</span>
 									</div>
 								);
@@ -73,7 +80,15 @@ class ExpandedList extends Component {
 						</button>
 					</form>
 				</div>
-				<FocusedTask task={this.state.focusedTask} />
+				<FocusedTask
+					task={this.state.focusedTask}
+					onTaskComplete={() =>
+						this.props.onTaskUpdate(this.completeTask(this.state.focusedTask))
+					}
+					onTaskFlag={() =>
+						this.props.onTaskUpdate(this.flagAsImpt(this.state.focusedTask))
+					}
+				/>
 			</div>
 		);
 	}
@@ -82,6 +97,9 @@ class ExpandedList extends Component {
 		this.setState({ taskName: e.target.value });
 	};
 
+	//	component only setting focusedtask as task here, so once i setstate focusedtask in
+	// complete task function, it's not the same object anymore and hence can't find the
+	// new state.focusedtask inside this.props.currentlySelected.tasks
 	handleTaskFocus = task => {
 		if (task === this.state.focusedTask) {
 			this.setState({ focusedTask: "hidden" });
@@ -91,24 +109,102 @@ class ExpandedList extends Component {
 	};
 
 	completeTask = task => {
-		console.log("task completed: ", task);
-		//if current task status is incomplete, make it complete and vice versa
-		//return the tasks array
 		let newTasks = this.props.currentlySelected.tasks.slice();
-
+		console.log("task to be updated: ", task);
 		switch (task.status) {
 			case "":
 				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
 					name: task.name,
-					status: "completed"
+					status: "completed",
+					dueDate: task.dueDate,
+					note: task.note,
+					flag: task.flag
 				});
-				return newTasks;
+				this.setState({
+					focusedTask: {
+						name: task.name,
+						status: "completed",
+						dueDate: task.dueDate,
+						note: task.note,
+						flag: task.flag
+					}
+				});
+				console.log(
+					"Completing task, your tasks: ",
+					this.props.currentlySelected.tasks,
+					task,
+					this.props.currentlySelected.tasks.indexOf(task)
+				);
+				return { newTasks: newTasks, task: task, action: "completed" };
 			case "completed":
 				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
 					name: task.name,
-					status: ""
+					status: "",
+					dueDate: task.dueDate,
+					note: task.note,
+					flag: task.flag
 				});
-				return newTasks;
+				this.setState({
+					focusedTask: {
+						name: task.name,
+						status: "",
+						dueDate: task.dueDate,
+						note: task.note,
+						flag: task.flag
+					}
+				});
+				console.log(
+					"Undoing task completion, your tasks: ",
+					this.props.currentlySelected.tasks,
+					task,
+					this.props.currentlySelected.tasks.indexOf(task)
+				);
+				return { newTasks: newTasks, task: task, action: "" };
+			default:
+				break;
+		}
+	};
+
+	flagAsImpt = task => {
+		let newTasks = this.props.currentlySelected.tasks.slice();
+		switch (task.flag) {
+			case "":
+				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+					name: task.name,
+					status: task.status,
+					dueDate: task.dueDate,
+					note: task.note,
+					flag: "important"
+				});
+				this.setState({
+					focusedTask: {
+						name: task.name,
+						status: task.status,
+						dueDate: task.dueDate,
+						note: task.note,
+						flag: "important"
+					}
+				});
+				return { newTasks: newTasks, task: task, action: "important" };
+
+			case "important":
+				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+					name: task.name,
+					status: task.status,
+					dueDate: task.dueDate,
+					note: task.note,
+					flag: ""
+				});
+				this.setState({
+					focusedTask: {
+						name: task.name,
+						status: task.status,
+						dueDate: task.dueDate,
+						note: task.note,
+						flag: ""
+					}
+				});
+				return { newTasks: newTasks, task: task, action: "remove-important" };
 			default:
 				break;
 		}
@@ -118,7 +214,10 @@ class ExpandedList extends Component {
 		if (this.state.taskName) {
 			let newTasks = [].concat(this.props.currentlySelected.tasks, {
 				name: this.state.taskName,
-				status: ""
+				status: "",
+				dueDate: "",
+				note: "",
+				flag: ""
 			});
 
 			let newSelected = {

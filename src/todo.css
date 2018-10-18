@@ -79,7 +79,8 @@
 	width: 0;
 }
 
-#expanded-list .list .task .checkbox {
+#expanded-list .list .task .checkbox,
+.focused-task .checkbox {
 	position: relative;
 	display: inline-block;
 	height: 13px;
@@ -91,16 +92,26 @@
 	cursor: pointer;
 }
 
-#expanded-list .list .task .checkbox:hover {
+#expanded-list .list .task .checkbox:hover,
+.focused-task .checkbox:hover {
 	border: solid 1px #4ea0bb;
 }
 
-#expanded-list .list .task.completed .task-name {
+#expanded-list .list .task.completed .task-name,
+.focused-task .task.completed .task-name {
 	text-decoration: line-through;
 }
 
-#expanded-list .list .task.completed .checkbox {
+#expanded-list .list .task.completed .checkbox,
+.focused-task .task.completed .checkbox {
 	background-color: #4ea0bb;
+}
+
+#expanded-list .list .task .flag-important {
+	cursor: pointer;
+	float: right;
+	position: relative;
+	right: 10px;
 }
 
 #add-task-button {
@@ -153,10 +164,15 @@
 .focused-task {
 	display: none;
 	position: absolute;
-	background-color: lightsalmon;
+	background-color: white;
 	width: 0;
 	height: 100%;
 	right: 0;
+	bottom: 0;
+	border-left: solid 2px dimgrey;
+	padding: 0 15px;
+	box-sizing: border-box;
+	font-size: 1.1em;
 }
 
 .focused-task.display {
@@ -167,4 +183,7 @@
 .focused-task.hidden {
 	display: none;
 	width: 0;
+}
+
+.focused-task .task .checkbox {
 }
