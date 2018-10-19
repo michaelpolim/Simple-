@@ -16,6 +16,18 @@
 	padding: 5px;
 }
 
+#todo-list-left.not-expanded {
+	width: 35px;
+}
+
+#todo-list-left.not-expanded .icon-name {
+	display: none;
+}
+
+#todo-list-left.not-expanded .total-tasks {
+	display: none;
+}
+
 #todo-list-left .left-list-name {
 	margin: 20px 10px;
 	cursor: pointer;
@@ -50,6 +62,7 @@
 	height: 100%;
 	padding: 20px 10px 10px 20px;
 	border-left: solid 2px dimgrey;
+	min-width: 300px;
 }
 
 .list .task-list .task-checkbox {
@@ -61,22 +74,19 @@
 }
 
 #expanded-list .list .task {
-	display: block;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	position: relative;
 	padding: 10px 0 7px 0;
 	border-bottom: dotted 1px grey;
 }
 
 #expanded-list .list .task .task-name {
-	line-height: 10px;
-}
-
-#expanded-list .list .task input {
-	position: absolute;
+	width: 80%;
+	margin: 0 10px;
+	flex-grow: 1;
 	cursor: pointer;
-	opacity: 0;
-	height: 0;
-	width: 0;
 }
 
 #expanded-list .list .task .checkbox,
@@ -88,7 +98,7 @@
 	background-color: white;
 	border: solid 1px lightblue;
 	border-radius: 50%;
-	margin: -2px 5px;
+	margin: 3px 5px;
 	cursor: pointer;
 }
 
@@ -107,11 +117,13 @@
 	background-color: #4ea0bb;
 }
 
-#expanded-list .list .task .flag-important {
+#expanded-list .list .task .flag-important,
+.focused-task .flag-important {
 	cursor: pointer;
 	float: right;
 	position: relative;
 	right: 10px;
+	color: dimgray;
 }
 
 #add-task-button {
@@ -156,6 +168,14 @@
 	font-size: 1em;
 }
 
+#expanded-list.shrink {
+	right: 275px;
+}
+
+#todo-list-left.not-expanded + #focused-list-task #expanded-list {
+	left: 45px;
+}
+
 #focused-list-task {
 	width: 100%;
 	height: 100%;
@@ -170,14 +190,17 @@
 	right: 0;
 	bottom: 0;
 	border-left: solid 2px dimgrey;
-	padding: 0 15px;
+	padding: 15px;
 	box-sizing: border-box;
 	font-size: 1.1em;
 }
 
 .focused-task.display {
-	display: block;
+	display: flex;
+	flex-direction: column;
 	width: 275px;
+	min-height: 550px;
+	top: 0;
 }
 
 .focused-task.hidden {
@@ -185,5 +208,85 @@
 	width: 0;
 }
 
-.focused-task .task .checkbox {
+.focused-task .box {
+	display: flex;
+	background-color: #eeeeee;
+	padding: 10px 15px;
+	height: auto;
+	border: solid 1px lightgrey;
+	margin-bottom: 15px;
+	font-size: 0.9em;
+}
+.focused-task .box .list {
+	padding: 10px 0;
+}
+
+.focused-task .box.task {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 15px 10px;
+}
+
+.focused-task .box.task .checkbox {
+	flex-shrink: 0;
+}
+.focused-task .box.task .task-name {
+	flex-grow: 1;
+	margin: 0 12px 0 0;
+}
+
+.focused-task .box.tools {
+	display: flex;
+	flex-direction: column;
+	padding: 0 10px;
+}
+
+.focused-task .box.tools .list {
+	padding: 20px 5px;
+	cursor: pointer;
+}
+
+.focused-task .box.tools .list:nth-child(1),
+.focused-task .box.tools .list:nth-child(2) {
+	border-bottom: 1px solid lightgrey;
+}
+
+.focused-task .box.note textarea {
+	background-color: inherit;
+	width: 100%;
+	height: 100px;
+	border: none;
+	resize: none;
+	outline: none;
+}
+
+.focused-task .box.note:focus-within {
+	border-color: grey;
+}
+
+.focused-task #bottom-tools {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	bottom: 10px;
+	width: 273px;
+	border-top: 1px solid lightgrey;
+	padding: 10px 15px 0;
+	margin: 0;
+	left: 0;
+	box-sizing: border-box;
+	box-shadow: 0 -1px 1px 0px lightgrey;
+}
+
+.focused-task #bottom-tools .tool {
+	cursor: pointer;
+	font-size: 1em;
+}
+
+.focused-task #bottom-tools .date-created {
+	font-size: 0.7em;
 }

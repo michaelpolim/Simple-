@@ -17,16 +17,19 @@ class ExpandedList extends Component {
 		super(props);
 
 		this.state.listName = this.props.currentlySelected.name;
+		this.testTask = "";
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({ listName: nextProps.currentlySelected.name });
 	}
 	render() {
-		console.log(this.state.listName);
 		return (
 			<div id="focused-list-task">
-				<div id="expanded-list">
+				<div
+					id="expanded-list"
+					className={this.state.focusedTask === "hidden" ? "" : "shrink"}
+				>
 					<div className="list">
 						<input
 							className="name"
@@ -88,6 +91,11 @@ class ExpandedList extends Component {
 					onTaskFlag={() =>
 						this.props.onTaskUpdate(this.flagAsImpt(this.state.focusedTask))
 					}
+					onTaskDelete={() =>
+						this.props.onTaskUpdate(this.deleteTask(this.state.focusedTask))
+					}
+					onHide={this.handleHideFocusedTask}
+					onDelete={this.handleTaskDelete}
 				/>
 			</div>
 		);
@@ -108,57 +116,59 @@ class ExpandedList extends Component {
 		}
 	};
 
+	deleteTask = () => {
+		let newTasks = this.props.currentlySelected.tasks.slice();
+		newTasks.splice(newTasks.indexOf(this.state.focusedTask), 1);
+
+		this.setState({ focusedTask: "hidden" });
+		console.log("task deleted");
+		return { newTasks: newTasks };
+	};
+
+	handleHideFocusedTask = () => {
+		this.setState({ focusedTask: "hidden", action: "" });
+	};
+
 	completeTask = task => {
 		let newTasks = this.props.currentlySelected.tasks.slice();
-		console.log("task to be updated: ", task);
 		switch (task.status) {
 			case "":
-				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+				this.testTask = {
 					name: task.name,
 					status: "completed",
 					dueDate: task.dueDate,
 					note: task.note,
 					flag: task.flag
-				});
-				this.setState({
-					focusedTask: {
-						name: task.name,
-						status: "completed",
-						dueDate: task.dueDate,
-						note: task.note,
-						flag: task.flag
-					}
-				});
-				console.log(
-					"Completing task, your tasks: ",
-					this.props.currentlySelected.tasks,
-					task,
-					this.props.currentlySelected.tasks.indexOf(task)
+				};
+				newTasks.splice(
+					this.props.currentlySelected.tasks.indexOf(task),
+					1,
+					this.testTask
 				);
+				if (this.state.focusedTask !== "hidden") {
+					this.setState({
+						focusedTask: this.testTask
+					});
+				}
 				return { newTasks: newTasks, task: task, action: "completed" };
 			case "completed":
-				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+				this.testTask = {
 					name: task.name,
 					status: "",
 					dueDate: task.dueDate,
 					note: task.note,
 					flag: task.flag
-				});
-				this.setState({
-					focusedTask: {
-						name: task.name,
-						status: "",
-						dueDate: task.dueDate,
-						note: task.note,
-						flag: task.flag
-					}
-				});
-				console.log(
-					"Undoing task completion, your tasks: ",
-					this.props.currentlySelected.tasks,
-					task,
-					this.props.currentlySelected.tasks.indexOf(task)
+				};
+				newTasks.splice(
+					this.props.currentlySelected.tasks.indexOf(task),
+					1,
+					this.testTask
 				);
+				if (this.state.focusedTask !== "hidden") {
+					this.setState({
+						focusedTask: this.testTask
+					});
+				}
 				return { newTasks: newTasks, task: task, action: "" };
 			default:
 				break;
@@ -169,41 +179,43 @@ class ExpandedList extends Component {
 		let newTasks = this.props.currentlySelected.tasks.slice();
 		switch (task.flag) {
 			case "":
-				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+				this.testTask = {
 					name: task.name,
 					status: task.status,
 					dueDate: task.dueDate,
 					note: task.note,
 					flag: "important"
-				});
-				this.setState({
-					focusedTask: {
-						name: task.name,
-						status: task.status,
-						dueDate: task.dueDate,
-						note: task.note,
-						flag: "important"
-					}
-				});
+				};
+				newTasks.splice(
+					this.props.currentlySelected.tasks.indexOf(task),
+					1,
+					this.testTask
+				);
+				if (this.state.focusedTask !== "hidden") {
+					this.setState({
+						focusedTask: this.testTask
+					});
+				}
 				return { newTasks: newTasks, task: task, action: "important" };
 
 			case "important":
-				newTasks.splice(this.props.currentlySelected.tasks.indexOf(task), 1, {
+				this.testTask = {
 					name: task.name,
 					status: task.status,
 					dueDate: task.dueDate,
 					note: task.note,
 					flag: ""
-				});
-				this.setState({
-					focusedTask: {
-						name: task.name,
-						status: task.status,
-						dueDate: task.dueDate,
-						note: task.note,
-						flag: ""
-					}
-				});
+				};
+				newTasks.splice(
+					this.props.currentlySelected.tasks.indexOf(task),
+					1,
+					this.testTask
+				);
+				if (this.state.focusedTask !== "hidden") {
+					this.setState({
+						focusedTask: this.testTask
+					});
+				}
 				return { newTasks: newTasks, task: task, action: "remove-important" };
 			default:
 				break;

@@ -176,21 +176,22 @@ class ToDo extends Component {
 		//copy important list to a new variable
 		let importantList =
 			newTodoList[newTodoList.findIndex(list => list.name === "Important")];
-
-		switch (updatedTasks.action) {
-			case "important":
-				//if user flags an item as important, add the task to the important list
-				importantList.tasks = importantList.tasks.concat(updatedTasks.task);
-				newTodoList[
-					newTodoList.indexOf(list => list.name === "Important")
-				] = importantList;
-				console.log("new Todo after flag: ", newTodoList);
-				break;
-			case "remove-important":
-				//if user unflags an item, check if items exist on
-				break;
-			default:
-				break;
+		if (updatedTasks.action) {
+			switch (updatedTasks.action) {
+				case "important":
+					//if user flags an item as important, add the task to the important list
+					importantList.tasks = importantList.tasks.concat(updatedTasks.task);
+					newTodoList[
+						newTodoList.indexOf(list => list.name === "Important")
+					] = importantList;
+					console.log("new Todo after flag: ", newTodoList);
+					break;
+				case "remove-important":
+					//if user unflags an item, check if items exist on
+					break;
+				default:
+					break;
+			}
 		}
 
 		//finally update the state with the updated lists

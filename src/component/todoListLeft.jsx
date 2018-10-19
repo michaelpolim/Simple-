@@ -6,11 +6,16 @@ import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 //will receive list of lists as props
 
 class ToDolistLeft extends Component {
+	constructor() {
+		super();
+
+		this.expand = "expanded";
+	}
 	render() {
-		console.log("rendered todoLeft component");
+		console.log("expanded: ", this.expand);
 		return (
-			<div id="todo-list-left">
-				<div id="expand-left-button">
+			<div id="todo-list-left" className={this.expand}>
+				<div id="expand-left-button" onClick={this.handleExpand}>
 					<FontAwesomeIcon icon={faBars} />
 				</div>
 				<div>
@@ -41,6 +46,15 @@ class ToDolistLeft extends Component {
 			</div>
 		);
 	}
+
+	handleExpand = () => {
+		if (this.expand === "expanded") {
+			this.expand = "not-expanded";
+		} else {
+			this.expand = "expanded";
+		}
+		this.forceUpdate();
+	};
 }
 
 export default ToDolistLeft;
