@@ -60,7 +60,7 @@
 	right: 0;
 	background-color: #eeeeee;
 	height: 100%;
-	padding: 20px 10px 10px 20px;
+	padding: 20px 0 0 0;
 	border-left: solid 2px dimgrey;
 	min-width: 300px;
 }
@@ -78,8 +78,12 @@
 	flex-direction: row;
 	justify-content: space-between;
 	position: relative;
-	padding: 10px 0 7px 0;
+	padding: 10px 0 10px 15px;
 	border-bottom: dotted 1px grey;
+}
+
+#expanded-list .list .task:hover {
+	background-color: white;
 }
 
 #expanded-list .list .task .task-name {
@@ -137,7 +141,7 @@
 }
 
 .list input {
-	padding: 5px 10px;
+	padding: 15px 0 5px 25px;
 }
 
 .list .name {
@@ -158,6 +162,7 @@
 
 #expanded-list .add-task {
 	margin-top: 30px;
+	margin-left: 15px;
 }
 #expanded-list .add-task input {
 	padding: 7.5px;
@@ -169,7 +174,7 @@
 }
 
 #expanded-list.shrink {
-	right: 275px;
+	right: 330px;
 }
 
 #todo-list-left.not-expanded + #focused-list-task #expanded-list {
@@ -198,7 +203,7 @@
 .focused-task.display {
 	display: flex;
 	flex-direction: column;
-	width: 275px;
+	width: 330px;
 	min-height: 550px;
 	top: 0;
 }
@@ -215,7 +220,7 @@
 	height: auto;
 	border: solid 1px lightgrey;
 	margin-bottom: 15px;
-	font-size: 0.9em;
+	font-size: 0.8em;
 }
 .focused-task .box .list {
 	padding: 10px 0;
@@ -227,6 +232,7 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	padding: 15px 10px;
+	font-size: 0.9em;
 }
 
 .focused-task .box.task .checkbox {
@@ -273,7 +279,7 @@
 	align-items: center;
 	justify-content: space-between;
 	bottom: 10px;
-	width: 273px;
+	width: 328px;
 	border-top: 1px solid lightgrey;
 	padding: 10px 15px 0;
 	margin: 0;

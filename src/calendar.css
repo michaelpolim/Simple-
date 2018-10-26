@@ -1,0 +1,69 @@
+#main-calendar {
+	display: none;
+	position: fixed;
+	background-color: white;
+	width: 300px;
+	padding: 15px;
+	box-sizing: border-box;
+	border: solid 1px lightgrey;
+}
+
+#main-calendar.show {
+	display: block;
+}
+
+#days-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-weight: bold;
+}
+
+.cell-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 7.5px 0;
+}
+
+.cell {
+	width: 100%;
+	cursor: pointer;
+}
+
+.cell-out-of-bound {
+	width: 100%;
+	color: grey;
+}
+
+#cells {
+	text-align: center;
+}
+
+#header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+#header .icon {
+	cursor: pointer;
+}
+
+#confirm-cancel {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin-top: 20px;
+}
+
+#confirm-cancel .button {
+	cursor: pointer;
+	width: 80px;
+	height: 25px;
+	background-color: lightblue;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 23px;
+}

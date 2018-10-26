@@ -7,8 +7,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
 import "../todo.css";
+import Calendar from "./calendar";
+
+//bug where onClick is called whenever focusedTask component is rendered ?
 
 class FocusedTask extends Component {
+	state = {
+		showCalendar: "main-calendar"
+	};
 	render() {
 		const { task } = this.props;
 		return (
@@ -29,7 +35,10 @@ class FocusedTask extends Component {
 				</div>
 				<div className="box tools">
 					<span className="list">Remind Me</span>
-					<span className="list">Add Due Date</span>
+					<span className="list" onClick={console.log("ADD DUE DATE")}>
+						Add Due Date
+					</span>
+					<Calendar display={this.state.showCalendar} />
 					<span className="list">Repeat</span>
 				</div>
 				<div className="box note">
@@ -47,6 +56,14 @@ class FocusedTask extends Component {
 			</div>
 		);
 	}
+
+	displayCalendar = () => {
+		if (this.state.showCalendar === "main-calendar") {
+			this.setState({ showCalendar: "main-calendar show" });
+		} else {
+			this.setState({ showCalendar: "main-calendar" });
+		}
+	};
 }
 
 export default FocusedTask;
