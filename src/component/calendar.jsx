@@ -56,6 +56,7 @@ class Calendar extends Component {
 
 	renderCells() {
 		const dateFormat = "D";
+		const dateComparisonFormat = "D MMM YYYY";
 		const { currentMonth, selectedDate } = this.state;
 		const monthStart = dateFns.startOfMonth(currentMonth);
 		const monthEnd = dateFns.endOfMonth(currentMonth);
@@ -68,19 +69,31 @@ class Calendar extends Component {
 		while (startDate < endDate) {
 			for (counter = 0; counter < 7; counter++) {
 				let d = startDate;
-				week.push(
-					<span
-						className={
-							dateFns.compareAsc(startDate, monthStart) === -1 ||
-							dateFns.compareAsc(startDate, monthEnd) === 1
-								? "cell-out-of-bound"
-								: "cell"
-						}
-						onClick={() => this.onCellClick(d)}
-					>
-						{dateFns.format(startDate, dateFormat)}
-					</span>
-				);
+				if (
+					dateFns.format(d, dateComparisonFormat) ===
+					dateFns.format(this.state.selectedDate, dateComparisonFormat)
+				) {
+					console.log(d, this.state.selectedDate);
+					week.push(
+						<span className="cell-selected">
+							<span>{dateFns.format(startDate, dateFormat)}</span>
+						</span>
+					);
+				} else {
+					week.push(
+						<span
+							className={
+								dateFns.compareAsc(startDate, monthStart) === -1 ||
+								dateFns.compareAsc(startDate, monthEnd) === 1
+									? "cell-out-of-bound"
+									: "cell"
+							}
+							onClick={() => this.onCellClick(d)}
+						>
+							{dateFns.format(startDate, dateFormat)}
+						</span>
+					);
+				}
 				startDate = dateFns.addDays(startDate, 1);
 			}
 			rows.push(<div className="cell-row">{[...week]}</div>);
@@ -92,18 +105,19 @@ class Calendar extends Component {
 	renderConfirmCancel() {
 		return (
 			<div id="confirm-cancel">
-				<span class="button" onClick={this.onCancel}>
+				<span className="button" onClick={this.props.onCancel}>
 					Cancel
 				</span>
-				<span class="button" onClick={this.onConfirm}>
+				<span
+					className="button"
+					onClick={() => this.props.onDueDateConfirm(this.state.selectedDate)}
+				>
 					Confirm
 				</span>
 			</div>
 		);
 	}
 
-	onCancel = () => {};
-	onConfirm = () => {};
 	onCellClick = day => {
 		this.setState({ selectedDate: day });
 		console.log("SelectedDate: ", this.state.selectedDate);

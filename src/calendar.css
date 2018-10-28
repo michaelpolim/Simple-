@@ -1,15 +1,17 @@
-#main-calendar {
+#main-calendar-hide {
 	display: none;
+}
+
+#main-calendar {
+	display: block;
 	position: fixed;
 	background-color: white;
+	right: 320px;
+	top: 82px;
 	width: 300px;
 	padding: 15px;
 	box-sizing: border-box;
 	border: solid 1px lightgrey;
-}
-
-#main-calendar.show {
-	display: block;
 }
 
 #days-row {
@@ -27,13 +29,28 @@
 }
 
 .cell {
+	flex: 1;
 	width: 100%;
 	cursor: pointer;
 }
 
 .cell-out-of-bound {
+	flex: 1;
 	width: 100%;
 	color: grey;
+}
+
+.cell-selected {
+	flex: 1;
+	color: white;
+}
+
+.cell-selected span {
+	width: 67%;
+	height: 111%;
+	display: inline-block;
+	background-color: dimgrey;
+	border-radius: 50%;
 }
 
 #cells {

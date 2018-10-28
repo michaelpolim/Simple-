@@ -6,6 +6,7 @@ import {
 	faTrash
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
+import dateFns from "date-fns";
 import "../todo.css";
 import Calendar from "./calendar";
 
@@ -13,10 +14,11 @@ import Calendar from "./calendar";
 
 class FocusedTask extends Component {
 	state = {
-		showCalendar: "main-calendar"
+		showCalendar: "main-calendar-hide"
 	};
 	render() {
 		const { task } = this.props;
+		console.log(task);
 		return (
 			<div
 				className={
@@ -35,10 +37,12 @@ class FocusedTask extends Component {
 				</div>
 				<div className="box tools">
 					<span className="list">Remind Me</span>
-					<span className="list" onClick={console.log("ADD DUE DATE")}>
+					<span className="list" onClick={() => this.displayCalendar()}>
 						Add Due Date
+						<div className={task.dueDate ? "due-date" : "due-date-hide"}>
+							Due on: {task.dueDate}
+						</div>
 					</span>
-					<Calendar display={this.state.showCalendar} />
 					<span className="list">Repeat</span>
 				</div>
 				<div className="box note">
@@ -53,16 +57,31 @@ class FocusedTask extends Component {
 						<FontAwesomeIcon icon={faTrash} />
 					</div>
 				</div>
+
+				<Calendar
+					display={this.state.showCalendar}
+					onDueDateConfirm={dueDate =>
+						this.props.onDueDateAdd(
+							dateFns.format(dueDate, "D MMM YYYY"),
+							this.displayCalendar()
+						)
+					}
+					onCancel={this.handleCalendarClose}
+				/>
 			</div>
 		);
 	}
 
 	displayCalendar = () => {
 		if (this.state.showCalendar === "main-calendar") {
-			this.setState({ showCalendar: "main-calendar show" });
+			this.setState({ showCalendar: "main-calendar-hide" });
 		} else {
 			this.setState({ showCalendar: "main-calendar" });
 		}
+	};
+
+	handleCalendarClose = () => {
+		this.setState({ showCalendar: "main-calendar-hide" });
 	};
 }
 

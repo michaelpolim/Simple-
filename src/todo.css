@@ -151,6 +151,8 @@
 	border: none;
 	cursor: pointer;
 	margin-bottom: 15px;
+	margin-left: 10px;
+	padding: 10px;
 	transition: all 0.25s;
 }
 
@@ -158,6 +160,14 @@
 	background-color: white;
 	cursor: text;
 	border-radius: 5px;
+}
+
+.list .due-date {
+	margin-top: 10px;
+}
+
+.list .due-date-hide {
+	display: none;
 }
 
 #expanded-list .add-task {

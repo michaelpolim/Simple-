@@ -94,6 +94,9 @@ class ExpandedList extends Component {
 					onTaskDelete={() =>
 						this.props.onTaskUpdate(this.deleteTask(this.state.focusedTask))
 					}
+					onDueDateAdd={dueDate =>
+						this.props.onTaskUpdate(this.addDueDate(this.state.focusedTask, dueDate))
+					}
 					onHide={this.handleHideFocusedTask}
 					onDelete={this.handleTaskDelete}
 				/>
@@ -220,6 +223,26 @@ class ExpandedList extends Component {
 			default:
 				break;
 		}
+	};
+
+	addDueDate = (task, dueDate) => {
+		console.log(task, dueDate);
+		let newTasks = this.props.currentlySelected.tasks.slice();
+		this.testTask = {
+			name: task.name,
+			status: task.status,
+			dueDate: dueDate,
+			note: task.note,
+			flag: task.flag
+		};
+
+		newTasks.splice(
+			this.props.currentlySelected.tasks.indexOf(task),
+			1,
+			this.testTask
+		);
+		this.setState({ focusedTask: this.testTask });
+		return { newTasks: newTasks, task: task };
 	};
 
 	newTask = () => {
