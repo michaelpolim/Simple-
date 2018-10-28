@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faStar, faThList } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
 import FocusedTask from "./focusedTask";
 import "../todo.css";
-import Task from "./task";
 
 class ExpandedList extends Component {
 	state = {

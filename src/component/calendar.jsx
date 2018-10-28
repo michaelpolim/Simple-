@@ -71,9 +71,8 @@ class Calendar extends Component {
 				let d = startDate;
 				if (
 					dateFns.format(d, dateComparisonFormat) ===
-					dateFns.format(this.state.selectedDate, dateComparisonFormat)
+					dateFns.format(selectedDate, dateComparisonFormat)
 				) {
-					console.log(d, this.state.selectedDate);
 					week.push(
 						<span className="cell-selected">
 							<span>{dateFns.format(startDate, dateFormat)}</span>

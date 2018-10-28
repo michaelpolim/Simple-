@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import ToDoListLeft from "./todoListLeft";
 import ExpandedList from "./expandedList";
-import Calendar from "./calendar";
 import "../todo.css";
 import {
 	faHome,

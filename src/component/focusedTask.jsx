@@ -10,8 +10,6 @@ import dateFns from "date-fns";
 import "../todo.css";
 import Calendar from "./calendar";
 
-//bug where onClick is called whenever focusedTask component is rendered ?
-
 class FocusedTask extends Component {
 	state = {
 		showCalendar: "main-calendar-hide"
@@ -52,7 +50,7 @@ class FocusedTask extends Component {
 					<div className="tool" onClick={this.props.onHide}>
 						<FontAwesomeIcon icon={faArrowRight} />
 					</div>
-					<div className="date-created">Created at 12:30 Friday 3 Oct 2019</div>
+					<div className="date-created">Created at 12:30 Friday 3 Oct 2018</div>
 					<div className="tool" onClick={this.props.onTaskDelete}>
 						<FontAwesomeIcon icon={faTrash} />
 					</div>
