@@ -16,7 +16,6 @@ class FocusedTask extends Component {
 	};
 	render() {
 		const { task } = this.props;
-		console.log(task);
 		return (
 			<div
 				className={
@@ -44,7 +43,11 @@ class FocusedTask extends Component {
 					<span className="list">Repeat</span>
 				</div>
 				<div className="box note">
-					<textarea placeholder="Add a note" />
+					<textarea
+						placeholder="Add a note"
+						onChange={e => this.props.onNoteAdd(e.target.value)}
+						value={task.note}
+					/>
 				</div>
 				<div id="bottom-tools">
 					<div className="tool" onClick={this.props.onHide}>
